@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/comix_thumbnail"
+        android:layout_width="80dp"
+        android:layout_height="120dp"
+        android:scaleType="fitStart"
+        android:src="@drawable/placeholder_image" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:id="@+id/comix_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="casual"
+            android:text="Comix Name Here"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/comix_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Comix author: abc, def" />
+
+        <TextView
+            android:id="@+id/comix_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Comix category: abc, def" />
+
+    </LinearLayout>
+
+</LinearLayout>

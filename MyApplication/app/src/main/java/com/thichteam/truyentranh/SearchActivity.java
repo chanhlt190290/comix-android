@@ -1,18 +1,16 @@
 package com.thichteam.truyentranh;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -28,50 +26,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity {
 
     private ListView listView;
     private ComixAdapter adapter;
     private List<JSONObject> comixs;
     private boolean isLoading = false;
     private int currentPage = 0;
+    private String query;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_menu, menu);
-
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
-        searchView.setQueryHint(getResources().getString(R.string.search_hint));
-
-        final AppCompatActivity that =this;
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Intent intent = new Intent(that, SearchActivity.class);
-                intent.putExtra(GlobalConst.EXTRA_QUERY, query);
-                startActivity(intent);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-
-        return true;
-    }
-
+    ImageButton actionBarIcon;
+    TextView actionBarTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
+        actionBarIcon = (ImageButton) getSupportActionBar().getCustomView().findViewById(R.id.action_bar_icon);
+        actionBarTitle = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.action_bar_title);
+
 
         listView = (ListView) findViewById(R.id.comix_list_view);
 
@@ -114,13 +87,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        handleIntent(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setContentView(R.layout.activity_main);
+
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        query = intent.getExtras().getString(GlobalConst.EXTRA_QUERY);
+        ((ViewGroup)actionBarIcon.getParent()).removeView(actionBarIcon);
+        actionBarTitle.setText("Kết quả: " + query);
         buildDataSet();
     }
 
     private void buildDataSet() {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = GlobalConst.API_BASE_URL + "all?page=" + (++currentPage);
+        String url = null;
+        try {
+            url = GlobalConst.API_BASE_URL + "search?page=" + (++currentPage)
+                    + "&q=" + URLEncoder.encode(query, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Từ khóa không hợp lệ!", Toast.LENGTH_LONG).show();
+        }
 
         final AppCompatActivity that = this;
         // Request a string response from the provided URL.
