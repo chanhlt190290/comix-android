@@ -1,15 +1,16 @@
-package com.thichteam.truyentranh.common;
+package com.thichteam.comix.common;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.thichteam.truyentranh.R;
+import com.thichteam.comix.R;
 
 /**
  * Created by chanhlt on 05/11/2016.
@@ -60,6 +61,10 @@ public class GlobalConst {
             }
         });
         dialog.show();
-
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(lp);
     }
 }

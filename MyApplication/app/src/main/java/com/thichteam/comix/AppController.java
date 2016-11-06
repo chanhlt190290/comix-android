@@ -1,4 +1,4 @@
-package com.thichteam.truyentranh;
+package com.thichteam.comix;
 
 /**
  * Created by chanhlt on 05/11/2016.
@@ -12,7 +12,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.thichteam.truyentranh.common.LruBitmapCache;
+import com.thichteam.comix.common.LruBitmapCache;
 
 public class AppController extends Application {
 

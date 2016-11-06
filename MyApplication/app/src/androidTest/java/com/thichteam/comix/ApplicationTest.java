@@ -1,4 +1,4 @@
-package com.thichteam.truyentranh;
+package com.thichteam.comix;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

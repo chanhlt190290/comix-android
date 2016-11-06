@@ -1,19 +1,17 @@
-package com.thichteam.truyentranh.adapter;
+package com.thichteam.comix.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.thichteam.truyentranh.AppController;
-import com.thichteam.truyentranh.R;
+import com.thichteam.comix.AppController;
+import com.thichteam.comix.R;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;

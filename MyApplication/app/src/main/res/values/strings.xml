@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Truyện Tranh</string>
+    <string name="app_name">Comic Comic</string>
     <string name="chapter_list">Danh sách chương</string>
     <string name="search_title">Tìm kiếm</string>
     <string name="search_hint">Nhập tên truyện</string>

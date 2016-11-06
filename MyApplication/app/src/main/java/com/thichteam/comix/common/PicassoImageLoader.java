@@ -1,11 +1,11 @@
-package com.thichteam.truyentranh.common;
+package com.thichteam.comix.common;
 
 import android.content.Context;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-import com.thichteam.truyentranh.R;
+import com.thichteam.comix.R;
 import com.veinhorn.scrollgalleryview.loader.MediaLoader;
 
 /**

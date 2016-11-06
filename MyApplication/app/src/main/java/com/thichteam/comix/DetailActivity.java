@@ -1,14 +1,16 @@
-package com.thichteam.truyentranh;
+package com.thichteam.comix;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,8 +22,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
-import com.thichteam.truyentranh.adapter.ChapterAdapter;
-import com.thichteam.truyentranh.common.GlobalConst;
+import com.thichteam.comix.adapter.ChapterAdapter;
+import com.thichteam.comix.common.GlobalConst;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,7 +47,9 @@ public class DetailActivity extends AppCompatActivity {
     private TextView comixStatus;
     private TextView comixChapNumber;
     private TextView chapListLabel;
+    private TextView comixShortContent;
     private NetworkImageView comixThumbnail;
+    private ScrollView mainScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +74,8 @@ public class DetailActivity extends AppCompatActivity {
         comixStatus = (TextView) findViewById(R.id.comix_status);
         comixThumbnail = (NetworkImageView) findViewById(R.id.comix_thumbnail);
         chapListLabel = (TextView) findViewById(R.id.chap_list_label);
+        comixShortContent = (TextView) findViewById(R.id.comix_short_content);
+        mainScrollView = (ScrollView) findViewById(R.id.main_scroll_view);
 
         buildComixInfo();
         buildDataSet();
@@ -127,7 +133,7 @@ public class DetailActivity extends AppCompatActivity {
                             if (responseJSONObj.getBoolean("success")) {
                                 JSONArray comixArray = responseJSONObj.getJSONArray("data");
                                 if (comixArray.length() == 0) {
-                                    Toast.makeText(that, "No more data to display!", Toast.LENGTH_LONG).show();
+//                                    Toast.makeText(that, "No more data to display!", Toast.LENGTH_LONG).show();
                                     --currentPage;
                                     return;
                                 }
@@ -137,6 +143,7 @@ public class DetailActivity extends AppCompatActivity {
                                 adapter.notifyDataSetChanged();
 //                                Toast.makeText(that, "Loading page " + currentPage + " successful!", Toast.LENGTH_LONG).show();
                                 GlobalConst.setListViewHeightBasedOnChildren(that, listView);
+                                mainScrollView.scrollTo(0,0);
                             } else {
                                 GlobalConst.showErrorDialog(that);
                             }
@@ -162,7 +169,7 @@ public class DetailActivity extends AppCompatActivity {
     private void buildComixInfo() {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = GlobalConst.API_BASE_URL + "detail?id=" + id;
+        final String url = GlobalConst.API_BASE_URL + "detail?id=" + id;
 
         final AppCompatActivity that = this;
         // Request a string response from the provided URL.
@@ -181,22 +188,22 @@ public class DetailActivity extends AppCompatActivity {
                                 comixCategory.setText(comix.optString("type"));
                                 comixStatus.setText(comix.optString("status"));
                                 comixChapNumber.setText(comix.optString("chapNumber"));
+                                comixShortContent.setText(comix.optString("shortContent"));
                                 chapListLabel.setText(R.string.chapter_list);
                             } else {
+                                Log.e("Error", "url: " + url + ", respose:" + responseJSONObj.toString());
                                 GlobalConst.showErrorDialog(that);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(that, "Parse JSON error!", Toast.LENGTH_LONG).show();
                         }
-                        isLoading = false;
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
                 Toast.makeText(that, "Network problem!", Toast.LENGTH_LONG).show();
-                isLoading = false;
             }
         });
         // Add the request to the RequestQueue.

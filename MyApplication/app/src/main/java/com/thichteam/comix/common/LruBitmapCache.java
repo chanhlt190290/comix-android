@@ -1,4 +1,4 @@
-package com.thichteam.truyentranh.common;
+package com.thichteam.comix.common;
 
 /**
  * Created by chanhlt on 05/11/2016.

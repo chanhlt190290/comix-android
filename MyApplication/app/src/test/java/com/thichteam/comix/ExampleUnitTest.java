@@ -1,4 +1,4 @@
-package com.thichteam.truyentranh;
+package com.thichteam.comix;
 
 import org.junit.Test;
 
