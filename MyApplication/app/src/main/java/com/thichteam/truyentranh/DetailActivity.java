@@ -135,7 +135,7 @@ public class DetailActivity extends AppCompatActivity {
                                     chaps.add(comixArray.getJSONObject(i));
                                 }
                                 adapter.notifyDataSetChanged();
-                                Toast.makeText(that, "Loading page " + currentPage + " successful!", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(that, "Loading page " + currentPage + " successful!", Toast.LENGTH_LONG).show();
                                 GlobalConst.setListViewHeightBasedOnChildren(that, listView);
                             } else {
                                 GlobalConst.showErrorDialog(that);

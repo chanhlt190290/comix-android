@@ -61,7 +61,7 @@ public class ViewActivity extends FragmentActivity {
                                 JSONObject chap = responseJSONObj.getJSONObject("data");
                                 JSONArray imageArray = chap.getJSONArray("images");
                                 if (imageArray.length() == 0) {
-                                    Toast.makeText(that, "No more data to display!", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(that, "No data found!", Toast.LENGTH_LONG).show();
                                     return;
                                 }
                                 List<MediaInfo> infos = new ArrayList<>(imageArray.length());
